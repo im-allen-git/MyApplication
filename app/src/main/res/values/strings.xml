@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">MyApplication</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="login_title">Login</string>
+    <string name="todo">TODO</string>
+    <string name="register_btn">Register</string>
+    <string name="forget_btn">ForgetPassword</string>
+    <string name="accept_btn">I have read and agree to the user agreement and privacy policy</string>
+    <string name="welcome_to_page">儿童体态检测APP</string>
+</resources>
