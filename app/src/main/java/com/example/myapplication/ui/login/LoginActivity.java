@@ -162,6 +162,7 @@ public class LoginActivity extends AppCompatActivity {
             // post
             // JSONObject jsonObject = OkHttpUtil.getInstance().callUrlByPost(OkHttpUtil.LOGIN_URL, paramMap);
 
+            // JSONObject jsonObject = OkHttpUtil.getInstance().post(OkHttpUtil.LOGIN_URL, paramMap);
             if (null != jsonObject && jsonObject.containsKey("code") && 200 == jsonObject.getIntValue("code")) {
                 count = jsonObject.getIntValue("total");
                 UserInfo userInfo = jsonObject.getObject("data", UserInfo.class);

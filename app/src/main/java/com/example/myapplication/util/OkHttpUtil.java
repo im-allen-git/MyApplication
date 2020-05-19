@@ -110,20 +110,20 @@ public class OkHttpUtil {
 
     public JSONObject post(String url , Map<String,String> param) throws IOException {
 
-        // UserInfo user = new UserInfo();
-        // user.setEmail(email);
-        // user.setPass_word(pass_word);
-        // Gson gson = new Gson();
-        // String json = gson.toJson(user);
+         UserInfo user = new UserInfo();
+         user.setEmail(param.get("email"));
+         user.setPass_word(param.get("pass_word"));
 
-        // RequestBody requestBody = FormBody.create(MediaType.parse("application/json; charset=utf-8"), json);
 
-        FormBody.Builder builder = new FormBody.Builder();
+        MediaType MEDIA_TYPE_JSON= MediaType.parse("application/json; charset=utf-8");
+         RequestBody requestBody = FormBody.create(MediaType.parse("application/json; charset=utf-8"), JSONObject.toJSONString(user));
+
+        /*FormBody.Builder builder = new FormBody.Builder();
 
         RequestBody requestBody = builder.build();
         for (Map.Entry<String, String> entry : param.entrySet()) {
             builder.add(entry.getKey(), entry.getValue());
-        }
+        }*/
 
         Request request = new Request.Builder()
                 .url(url)//请求的url
