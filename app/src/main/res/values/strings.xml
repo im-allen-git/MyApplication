@@ -15,4 +15,5 @@
     <string name="forget_btn">ForgetPassword</string>
     <string name="accept_btn">I have read and agree to the user agreement and privacy policy</string>
     <string name="welcome_to_page">儿童体态检测APP</string>
+    <string name="next_btn">Next</string>
 </resources>
