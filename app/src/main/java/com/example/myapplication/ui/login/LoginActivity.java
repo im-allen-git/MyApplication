@@ -19,10 +19,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.myapplication.R;
 import com.example.myapplication.main.CheckMainActivity;
-import com.example.myapplication.util.DBUtils;
+import com.example.myapplication.pojo.UserInfo;
+import com.example.myapplication.util.OkHttpUtil;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
@@ -71,16 +74,20 @@ public class LoginActivity extends AppCompatActivity {
                     updateUiWithUser(loginResult.getSuccess());
                 }
 
-                if (checkUserInfo(usernameEditText.getText().toString(), passwordEditText.getText().toString())) {
-                    Intent it = new Intent(getApplicationContext(), CheckMainActivity.class);
 
-                    startActivity(it);
-                    finish();
-                } else {
-                    return;
-                }
+                Thread myThread = new Thread() {
+                    @Override
+                    public void run() {
+                        if (checkUserInfo(usernameEditText.getText().toString(), passwordEditText.getText().toString()) > 0) {
+                            Intent it = new Intent(getApplicationContext(), CheckMainActivity.class);
 
+                            startActivity(it);
+                            finish();
+                        }
+                    }
+                };
 
+                myThread.start();
                 // setResult(Activity.RESULT_OK);
                 //Complete and destroy login activity once successful
                 // finish();
@@ -139,11 +146,32 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private boolean checkUserInfo(String email, String password) {
-        /*HashMap<String, Object> infoByEmail = DBUtils.getInfoByEmail(email);
-        if (null != infoByEmail && password.endsWith(infoByEmail.get("pass_word").toString())) {
-            return true;
-        }*/
-        return true;
+    private int checkUserInfo(String email, String password) {
+
+        int count = 0;
+
+        // DBUtils.getInfoByEmail(email);
+        HashMap<String, String> paramMap = new HashMap<>();
+        paramMap.put("email", email);
+        paramMap.put("pass_word", password);
+        try {
+            // get
+            String url = OkHttpUtil.LOGIN_URL + "?email=" + email + "&pass_word=" + password;
+            JSONObject jsonObject = OkHttpUtil.getInstance().callUrlByGet(url);
+
+            // post
+            // JSONObject jsonObject = OkHttpUtil.getInstance().callUrlByPost(OkHttpUtil.LOGIN_URL, paramMap);
+
+            if (null != jsonObject && jsonObject.containsKey("code") && 200 == jsonObject.getIntValue("code")) {
+                count = jsonObject.getIntValue("total");
+                UserInfo userInfo = jsonObject.getObject("data", UserInfo.class);
+                System.err.println(userInfo);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            count = -1;
+        }
+        // count = 1;
+        return count;
     }
 }
