@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.main.CheckMainActivity;
 import com.example.myapplication.ui.login.LoginActivity;
 
 
@@ -37,7 +38,7 @@ public class WelcomeActivity extends Activity {
             public void run() {
                 try {
                     sleep(2000);
-                    Intent it = new Intent(getApplicationContext(), LoginActivity.class);
+                    Intent it = new Intent(getApplicationContext(), CheckMainActivity.class);
                     startActivity(it);
                     finish();
                 } catch (Exception e) {

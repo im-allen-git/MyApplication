@@ -174,7 +174,7 @@ public class LoginActivity extends AppCompatActivity {
 
         int count = 0;
 
-        // DBUtils.getInfoByEmail(email);
+        /*// DBUtils.getInfoByEmail(email);
         HashMap<String, String> paramMap = new HashMap<>();
         paramMap.put("email", email);
         paramMap.put("pass_word", password);
@@ -195,8 +195,8 @@ public class LoginActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
             count = -1;
-        }
-        // count = 1;
+        }*/
+        count = 1;
         return count;
     }
 }

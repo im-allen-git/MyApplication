@@ -7,17 +7,81 @@
     android:layout_height="match_parent"
     tools:context=".ui.login.LoginActivity">
 
+
+
     <WebView
         android:id="@+id/children"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="32dp"
         android:padding="0dp"
         android:paddingLeft="0dp"
         android:paddingTop="0dp"
         android:paddingRight="0dp"
         android:paddingBottom="0dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="-47dp">
+
+
+    </WebView>
+
+    <Button
+        android:id="@+id/click_button"
+        android:layout_width="94dp"
+        android:layout_height="33dp"
+        android:layout_marginEnd="316dp"
+        android:layout_marginRight="316dp"
+        android:layout_x="153dp"
+        android:layout_y="624dp"
+        android:background="#D74D4D"
+        android:text="@string/click_button"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/children"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="MissingConstraints"
+        tools:visibility="visible" />
+
+    <Button
+        android:id="@+id/big_button"
+        android:layout_width="94dp"
+        android:layout_height="33dp"
+        android:layout_marginEnd="196dp"
+        android:layout_marginRight="196dp"
+        android:layout_x="353dp"
+        android:layout_y="624dp"
+        android:background="#D74D4D"
+        android:text="@string/big_button"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/children"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="MissingConstraints"
+        tools:visibility="visible" />
+
+
+    <Button
+        android:id="@+id/lit_button"
+        android:layout_width="94dp"
+        android:layout_height="33dp"
+        android:layout_marginEnd="68dp"
+        android:layout_marginRight="68dp"
+        android:layout_x="353dp"
+        android:layout_y="624dp"
+        android:background="#D74D4D"
+        android:text="@string/lit_button"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/children"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="MissingConstraints"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

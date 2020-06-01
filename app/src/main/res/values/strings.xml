@@ -16,4 +16,7 @@
     <string name="accept_btn">I have read and agree to the user agreement and privacy policy</string>
     <string name="welcome_to_page">儿童体态检测APP</string>
     <string name="next_btn">Next</string>
+    <string name="click_button">标准模型</string>
+    <string name="big_button">放大</string>
+    <string name="lit_button">缩小</string>
 </resources>
