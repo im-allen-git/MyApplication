@@ -38,5 +38,6 @@
     <string name="status_waiting">等待打印</string>
     <string name="click_button">标准模型</string>
     <string name="big_button">放大</string>
-    <string name="lit_button">缩小</string>
+    <string name="lit_button">下载</string>
+    <string name="up_button">上传文件</string>
 </resources>

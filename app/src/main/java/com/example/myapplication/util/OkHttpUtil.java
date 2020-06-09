@@ -1,29 +1,32 @@
 package com.example.myapplication.util;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
+import android.app.Activity;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.myapplication.pojo.UserInfo;
-import com.google.gson.Gson;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.FormBody;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
-public class OkHttpUtil {
+public class OkHttpUtil extends Activity {
     public static final MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
 
     private final static String SERVICE_URL = "https://192.168.1.67:448";
@@ -41,9 +44,9 @@ public class OkHttpUtil {
     private static OkHttpClient clientLong = new OkHttpClient.Builder()
             .sslSocketFactory(HttpsTrustManager.createSSLSocketFactory(), new HttpsTrustManager())
             .hostnameVerifier(new HttpsTrustManager.TrustAllHostnameVerifier())
-            .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
-            .connectTimeout(60, TimeUnit.SECONDS).build();
+            .readTimeout(90, TimeUnit.SECONDS)
+            .writeTimeout(90, TimeUnit.SECONDS)
+            .connectTimeout(180, TimeUnit.SECONDS).build();
 
     private volatile static OkHttpUtil singleton = null;
 
@@ -108,15 +111,35 @@ public class OkHttpUtil {
         return executeCall(url, request);
     }
 
-    public JSONObject post(String url , Map<String,String> param) throws IOException {
 
-         UserInfo user = new UserInfo();
-         user.setEmail(param.get("email"));
-         user.setPass_word(param.get("pass_word"));
+    /**
+     * @param url            :访问链接
+     * @param commandLineMap : 命令集合
+     * @return
+     * @throws IOException
+     */
+    public JSONObject postFile(String url, File file, Map<String, String> commandLineMap) throws IOException {
+
+        String multipartStr = "multipart/form-data";
+        RequestBody formBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("file", file.getName(),
+                        RequestBody.create(MediaType.parse(multipartStr), file))
+                .addFormDataPart("commandLineMap", commandLineMap.toString()).build();
+        Request request = new Request.Builder().url(url).post(formBody).build();
+        return executeCall(url, request);
+
+    }
 
 
-        MediaType MEDIA_TYPE_JSON= MediaType.parse("application/json; charset=utf-8");
-         RequestBody requestBody = FormBody.create(MediaType.parse("application/json; charset=utf-8"), JSONObject.toJSONString(user));
+    public JSONObject post(String url, Map<String, String> param) throws IOException {
+
+        UserInfo user = new UserInfo();
+        user.setEmail(param.get("email"));
+        user.setPass_word(param.get("pass_word"));
+
+
+        MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody requestBody = FormBody.create(MediaType.parse("application/json; charset=utf-8"), JSONObject.toJSONString(user));
 
         /*FormBody.Builder builder = new FormBody.Builder();
 
@@ -177,5 +200,69 @@ public class OkHttpUtil {
         return response.body() != null ?
                 JSON.parseObject(response.body().string()) : null;
     }
+
+
+    public boolean downFromImgService(String imgUrl, String fileName) {
+        File file = new File(fileName);
+        InputStream inputStream = null;
+        FileOutputStream fileOutputStream = null;
+        ByteArrayOutputStream output = null;
+        try {
+
+            Request request = new Request.Builder().addHeader("Connection", "close").addHeader("Accept", "*/*")
+                    .addHeader("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:0.9.4)").get().url(imgUrl).build();
+            Response response = clientLong.newCall(request).execute();
+
+            inputStream = response.body().byteStream();
+
+            if (!file.getParentFile().exists()) {
+                file.getParentFile().mkdirs();// 返回此抽象路径名父目录的抽象路径名；创建
+            } else if (file.exists() && file.isFile()) {
+                file.delete();
+            }
+
+            fileOutputStream = new FileOutputStream(file);
+            output = new ByteArrayOutputStream();
+
+            byte[] buffer = new byte[1024];
+            int length;
+
+            while ((length = inputStream.read(buffer)) > 0) {
+                output.write(buffer, 0, length);
+            }
+            fileOutputStream.write(output.toByteArray());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("execute download[ " + imgUrl + "] error:" + e.getMessage());
+            Log.e("downFromImgService", "error:", e);
+            return false;
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (fileOutputStream != null) {
+                try {
+                    fileOutputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (output != null) {
+                try {
+                    output.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        file = new File(fileName);
+        return file.exists() && !file.isDirectory();
+    }
+
 
 }
