@@ -1,4 +1,4 @@
-package com.example.myapplication.welcome;
+package com.example.myapplication.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -13,8 +13,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.main.CheckMainActivity;
-import com.example.myapplication.ui.login.LoginActivity;
+import com.example.myapplication.activity.CheckMainActivity;
 
 
 public class WelcomeActivity extends Activity {

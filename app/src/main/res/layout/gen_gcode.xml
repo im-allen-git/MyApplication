@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+
+            <Button
+                android:id="@+id/up_button"
+                android:layout_width="182dp"
+                android:layout_height="42dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="@string/up_button" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar_up"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="182dp"
+                android:layout_height="11dp"
+                android:layout_gravity="center"
+                android:max="100"
+                android:progress="0"
+                tools:ignore="MissingConstraints"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:id="@+id/down_text_show"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:text="@string/down_text_show"
+                tools:ignore="MissingConstraints" />
+        </LinearLayout>
+       <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+
+            <Button
+                android:id="@+id/down_button"
+                android:layout_width="182dp"
+                android:layout_height="42dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="#D74D4D"
+                android:text="@string/down_button"
+              />
+
+
+
+            <ProgressBar
+                android:id="@+id/progress_bar_dw"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="182dp"
+                android:layout_height="11dp"
+                android:layout_gravity="center"
+                android:max="100"
+                android:progress="0"
+                tools:ignore="MissingConstraints"
+               />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/view_button"
+                android:layout_width="182dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="#D74D4D"
+                android:text="@string/view_button" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

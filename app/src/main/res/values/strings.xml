@@ -40,4 +40,8 @@
     <string name="big_button">放大</string>
     <string name="lit_button">下载</string>
     <string name="up_button">上传文件</string>
+    <string name="down_button">下载文件</string>
+    <string name="down_text_show">...</string>
+    <string name="jump_button">处理文件</string>
+    <string name="view_button">预览</string>
 </resources>
