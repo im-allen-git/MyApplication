@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -53,7 +54,7 @@ public class CheckMainActivity extends AppCompatActivity {
 
         setContentView(R.layout.index);
         // 拿到webView组件
-        WebView webView = (WebView) findViewById(R.id.children);
+        WebView webView = findViewById(R.id.children);
 
         // 拿到webView的设置对象
         WebSettings settings = webView.getSettings();
@@ -73,6 +74,13 @@ public class CheckMainActivity extends AppCompatActivity {
         // 加载url到webView中
         webView.loadUrl(WEB_URL);
 
+        // 加载html
+        //webView.loadData(WEB_URL, "text/html", "utf-8");
+
+        // 复写WebViewClient类的shouldOverrideUrlLoading方法
+        webView.setWebViewClient(new MyWebViewClient());
+        webView.setWebChromeClient(new GoogleClient());
+
         /*Intent intent = new Intent();
         intent.setAction("android.intent.action.VIEW");
         Uri content_url = Uri.parse(WEB_URL);
@@ -90,11 +98,8 @@ public class CheckMainActivity extends AppCompatActivity {
 
         litBtn.setOnClickListener(v -> {
             webView.loadUrl("javascript:cameraSides(8)");
-            webView.evaluateJavascript("javascript:callJS()", new ValueCallback<String>() {
-                @Override
-                public void onReceiveValue(String value) {
-                    //此处为 js 返回的结果
-                }
+            webView.evaluateJavascript("javascript:callJS()", value -> {
+                //此处为 js 返回的结果
             });
         });
 
@@ -112,8 +117,7 @@ public class CheckMainActivity extends AppCompatActivity {
         });
 
 
-        // 复写WebViewClient类的shouldOverrideUrlLoading方法
-        webView.setWebViewClient(new MyWebViewClient());
+
 
         /*litBtn.setOnClickListener(v -> {
 
@@ -154,6 +158,14 @@ public class CheckMainActivity extends AppCompatActivity {
                 return true;
             }
             return super.shouldOverrideUrlLoading(view, url);
+        }
+    }
+
+    public class GoogleClient extends WebChromeClient {
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            super.onProgressChanged(view, newProgress);
+
         }
     }
 
